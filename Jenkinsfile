@@ -1,10 +1,7 @@
-/* Requires the Docker Pipeline plugin */
-pipeline {
-    stages {
-        stage('build') {
-            steps {
-                sh 'node --version'
-            }
-        }
-    }
+// This shows a simple example of how to archive the build output artifacts.
+node {
+    stage "Create build output"
+    
+    // Make the output directory.
+    sh "echo hello"
 }
