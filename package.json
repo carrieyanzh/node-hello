@@ -1,20 +1,29 @@
 {
   "name": "node-hello",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Hello World Node.js app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johnpapa/node-hello.git"
+    "url": "git+https://github.com/khaledyoussef/node-hello.git"
   },
-  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/khaledyoussef/node-hello/issues"
+  },
+  "homepage": "https://github.com/khaledyoussef/node-hello#readme",
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/johnpapa/node-hello/issues"
+  "dependencies": {
+    "express": "^4.18.2"
   },
-  "homepage": "https://github.com/johnpapa/node-hello#readme"
+  "devDependencies": {
+    "eslint": "^9.26.0",
+    "@eslint/js": "^9.26.0",
+    "globals": "^16.1.0"
+  }
 }
