@@ -9,8 +9,8 @@ Great for testing simple deployments to the cloud
 - Node.js Express web server
 - Dockerized application with custom Dockerfile
 - Terraform-based deployment using the Docker provider
-- GitHub Actions for CI/CD (build, lint, push image)
-- Optional: Integrates with monitoring/logging tools (e.g., New Relic)
+- GitHub Actions for CI/CD
+- Integrates with New relic for monitoring
 
 ---
 
@@ -22,7 +22,8 @@ Ensure you have the following tools installed:
 - [Docker](https://www.docker.com/)
 - [Terraform](https://developer.hashicorp.com/terraform/install)
 - [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) 
+- [Node.js](https://nodejs.org/)
+- [New Relic](https://newrelic.com/)
 
 ---
 
