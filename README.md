@@ -35,7 +35,7 @@ git clone https://github.com/your-username/node-hello.git
 cd node-hello
 ```
 
-### Run locally with Docker
+### 2. Run locally with Docker
 
 ```
 docker build -t node-hello .
@@ -43,7 +43,7 @@ docker run -p 3000:3000 node-hello
 
 ```
 
-### Deploy with Terraform
+### 3. Deploy with Terraform
 
 ```
 terraform init
