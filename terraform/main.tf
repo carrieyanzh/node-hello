@@ -32,7 +32,8 @@ resource "docker_container" "app" {
   }
   env = [
     "NODE_ENV=production",
-    "NEW_RELIC_LICENSE_KEY=${var.new_relic_license_key}"
+    "NEW_RELIC_LICENSE_KEY=${var.new_relic_license_key}",
+    "NEW_RELIC_APP_NAME=Node Hello App"
   ]
 
   log_driver = "json-file"
