@@ -25,7 +25,7 @@ resource "docker_image" "app_image" {
 
 resource "docker_container" "app" {
   name  = "node-hello"
-  image = docker_image.app_image.image_tag
+  image = docker_image.app_image.image_id
   ports {
     internal = 3000
     external = 3000
