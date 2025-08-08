@@ -56,6 +56,7 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
             type=sha
+            latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -64,3 +65,36 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./terraform
+
+      - name: Terraform Plan
+        run: terraform plan
+        working-directory: ./terraform
+        env:
+          TF_VAR_image_tag: ${{ github.sha }}
+          TF_VAR_github_repository: ${{ github.repository }}
+          TF_VAR_new_relic_license_key: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: ./terraform
+        env:
+          TF_VAR_image_tag: ${{ github.sha }}
+          TF_VAR_github_repository: ${{ github.repository }}
+          TF_VAR_new_relic_license_key: ${{ secrets.NEW_RELIC_LICENSE_KEY }}

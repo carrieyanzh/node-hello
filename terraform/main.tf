@@ -1,0 +1,53 @@
+variable "repository_owner" {
+     description = "GitHub repository owner name"
+     type        = string
+}
+
+variable "image" {
+  type    = string
+  default = "ghcr.io/${repository_owner}/node-hello:latest"
+}
+
+variable "new_relic_license_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "image_tag" {
+  type    = string
+  default = "latest"
+}
+
+resource "docker_image" "app_image" {
+  name = var.image
+  keep_locally = false
+  pull_triggers = [var.image_tag]
+}
+
+resource "docker_container" "app" {
+  name  = "node-hello"
+  image = docker_image.app_image.image_tag
+  ports {
+    internal = 3000
+    external = 3000
+  }
+  env = [
+    "NODE_ENV=production",
+    "NEW_RELIC_LICENSE_KEY=${var.new_relic_license_key}"
+  ]
+}
+
+output "container_id" {
+  description = "The ID of the deployed Docker container"
+  value       = docker_container.app.id
+}
+
+output "container_name" {
+  description = "The name of the deployed Docker container"
+  value       = docker_container.app.name
+}
+
+output "container_ports" {
+  description = "Ports exposed by the container"
+  value       = docker_container.app.ports
+}
