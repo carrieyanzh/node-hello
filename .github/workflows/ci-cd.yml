@@ -73,6 +73,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.TOKEN }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
