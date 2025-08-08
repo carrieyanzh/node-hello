@@ -14,7 +14,7 @@ variable "image_tag" {
 }
 
 locals {
-  image = "ghcr.io/${var.repository_owner}/node-hello:${var.image_tag}"
+  image = "ghcr.io/${var.repository_owner}/node-hello:latest"
 }
 
 resource "docker_image" "app_image" {
@@ -34,7 +34,7 @@ resource "docker_container" "app" {
     "NODE_ENV=production",
     "NEW_RELIC_LICENSE_KEY=${var.new_relic_license_key}"
   ]
-  
+
   log_driver = "json-file"
   log_opts = {
     tag = "{{.Name}}"
