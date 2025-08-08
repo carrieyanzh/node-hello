@@ -3,11 +3,6 @@ variable "repository_owner" {
      type        = string
 }
 
-variable "image" {
-  type    = string
-  default = "ghcr.io/${repository_owner}/node-hello:latest"
-}
-
 variable "new_relic_license_key" {
   type      = string
   sensitive = true
@@ -18,8 +13,12 @@ variable "image_tag" {
   default = "latest"
 }
 
+locals {
+  image = "ghcr.io/${var.repository_owner}/node-hello:${var.image_tag}"
+}
+
 resource "docker_image" "app_image" {
-  name = var.image
+  name = local.image
   keep_locally = false
   pull_triggers = [var.image_tag]
 }
