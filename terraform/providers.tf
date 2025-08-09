@@ -6,6 +6,13 @@ terraform {
     }
   }
   required_version = ">= 1.2"
+
+  backend "s3" {
+    bucket         = "node-hello-terraform-state-us-east-1"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "node-hello-terraform-locks"
+  }
 }
 
 provider "aws" {

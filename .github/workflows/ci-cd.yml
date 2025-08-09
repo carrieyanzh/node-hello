@@ -106,10 +106,10 @@ jobs:
           TF_VAR_new_relic_license_key: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
           TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-        working-directory: ./terraform
-        env:
-          TF_VAR_repository_owner: ${{ github.repository_owner }}
-          TF_VAR_new_relic_license_key: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
-          TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
+      # - name: Terraform Apply
+      #   run: terraform apply -auto-approve
+      #   working-directory: ./terraform
+      #   env:
+      #     TF_VAR_repository_owner: ${{ github.repository_owner }}
+      #     TF_VAR_new_relic_license_key: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
+      #     TF_VAR_aws_region: ${{ secrets.AWS_REGION }}

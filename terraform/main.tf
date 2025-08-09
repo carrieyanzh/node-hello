@@ -21,7 +21,7 @@ variable "app_name" {
 
 locals {
   repository_owner_normalized = lower(var.repository_owner)
-  image = "ghcr.io/${local.repository_owner_normalized}/node-hello:latest"
+  image                       = "ghcr.io/${local.repository_owner_normalized}/node-hello:latest"
 }
 
 # Get default VPC
@@ -82,10 +82,10 @@ resource "aws_ecs_task_definition" "app" {
 
   container_definitions = jsonencode([
     {
-      name  = var.app_name
-      image = local.image
+      name      = var.app_name
+      image     = local.image
       essential = true
-      
+
       portMappings = [
         {
           containerPort = 3000
@@ -93,7 +93,7 @@ resource "aws_ecs_task_definition" "app" {
           protocol      = "tcp"
         }
       ]
-      
+
       environment = [
         {
           name  = "NODE_ENV"
@@ -108,7 +108,7 @@ resource "aws_ecs_task_definition" "app" {
           value = "Node Hello App"
         }
       ]
-      
+
       logConfiguration = {
         logDriver = "awslogs"
         options = {
