@@ -25,7 +25,8 @@ variable "app_name" {
 }
 
 locals {
-  image = "ghcr.io/${var.repository_owner}/node-hello:${var.image_tag}"
+  repository_owner_normalized = lower(var.repository_owner)
+  image = "ghcr.io/${local.repository_owner_normalized}/node-hello:${var.image_tag}"
 }
 
 # Get default VPC
