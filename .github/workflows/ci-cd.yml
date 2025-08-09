@@ -102,7 +102,6 @@ jobs:
         run: terraform plan
         working-directory: ./terraform
         env:
-          TF_VAR_image_tag: ${{ github.sha }}
           TF_VAR_repository_owner: ${{ github.repository_owner }}
           TF_VAR_new_relic_license_key: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
           TF_VAR_aws_region: ${{ secrets.AWS_REGION }}
@@ -111,7 +110,6 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: ./terraform
         env:
-          TF_VAR_image_tag: ${{ github.sha }}
           TF_VAR_repository_owner: ${{ github.repository_owner }}
           TF_VAR_new_relic_license_key: ${{ secrets.NEW_RELIC_LICENSE_KEY }}
           TF_VAR_aws_region: ${{ secrets.AWS_REGION }}

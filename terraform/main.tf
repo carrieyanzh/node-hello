@@ -8,11 +8,6 @@ variable "new_relic_license_key" {
   sensitive = true
 }
 
-variable "image_tag" {
-  type    = string
-  default = "latest"
-}
-
 variable "aws_region" {
   description = "AWS region"
   type        = string
@@ -26,7 +21,7 @@ variable "app_name" {
 
 locals {
   repository_owner_normalized = lower(var.repository_owner)
-  image = "ghcr.io/${local.repository_owner_normalized}/node-hello:${var.image_tag}"
+  image = "ghcr.io/${local.repository_owner_normalized}/node-hello:latest"
 }
 
 # Get default VPC
