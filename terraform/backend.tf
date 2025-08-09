@@ -1,3 +1,12 @@
+terraform {
+  backend "s3" {
+    bucket         = "node-hello-terraform-state-us-east-1"
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "node-hello-terraform-locks"
+  }
+}
+
 # S3 Bucket for Terraform State
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "${var.app_name}-terraform-state-${var.aws_region}"
