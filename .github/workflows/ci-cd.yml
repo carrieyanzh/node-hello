@@ -69,16 +69,8 @@ jobs:
       - name: Make package public
         run: |
           OWNER="${{ github.repository_owner }}"
-          PACKAGE="${{ env.IMAGE_NAME }}"
-
-          # Decide correct API path
-          if gh api orgs/$OWNER --silent; then
-            ENDPOINT="/orgs/$OWNER/packages/container/$PACKAGE/visibility"
-          else
-            ENDPOINT="/user/packages/container/$PACKAGE/visibility"
-          fi
-
-          gh api --method PATCH "$ENDPOINT" \
+          PACKAGE="${{ github.repository }}"
+          gh api --method PATCH "/users/$OWNER/packages/container/$PACKAGE/visibility" \
             -F visibility=public \
             || echo "Package might already be public or not pushed yet"
         env:
