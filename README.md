@@ -1,4 +1,4 @@
-# Node Hello App CI/CD & Terraform Deployment
+# Node Hello App
 
 This repository contains a simple Node.js web server application deployed to AWS ECS using GitHub Actions and Terraform. The app is containerized with Docker, published to GitHub Container Registry (GHCR), and monitored with New Relic. The Terraform state is stored in an AWS S3 bucket with DynamoDB for locking, ensuring safe and collaborative infrastructure management.
 
@@ -25,7 +25,7 @@ Go to your repository `Settings > Secrets and variables > Actions > Secrets` and
 - `NEW_RELIC_LICENSE_KEY`: Your New Relic license key.
 - `TOKEN`: A GitHub personal access token with `write:packages` and `read:packages` scopes.
 
-### 2. Configure Terraform Backend
+### 2.  Set Up Terraform Backend (One-Time Setup)
 
 The Terraform state is stored in an AWS S3 bucket with DynamoDB for locking, both defined in `terraform/backend.tf`. These resources must exist before Terraform can use the S3 backend. Follow these steps to create them using Terraform:
 
@@ -75,7 +75,21 @@ The Terraform state is stored in an AWS S3 bucket with DynamoDB for locking, bot
      ```
    - Confirm the migration when prompted (type `yes`).
 
-### 3. Deploy Your Application
+
+### 3. Configure Container Registry Access
+
+1. Go to your GitHub repository
+
+2. Navigate to Packages (right sidebar) - Only visible after first image push
+
+3. Click on your node-hello package
+
+4. Go to Package settings
+
+5. Change visibility to Public
+
+
+### 4. Deploy Your Application
 
 Push your code to the `master` branch. The GitHub Actions workflow will:
 
@@ -87,14 +101,10 @@ Push your code to the `master` branch. The GitHub Actions workflow will:
 
 After successful deployment:
 
-- Find your app's public IP:
-  ```sh
-  aws ecs list-tasks --cluster node-hello --region us-east-1
-  aws ecs describe-tasks --cluster node-hello --tasks [TASK-ARN] --region us-east-1
-  ```
+- Find your app's public IP from the cluster's task configuration.
 - Access your app: `http://[PUBLIC_IP]:3000`.
 
-### 4. Workflow Overview
+### 5. Workflow Overview
 
 The `.github/workflows/ci-cd.yml` workflow includes the following steps:
 
@@ -106,11 +116,11 @@ The `.github/workflows/ci-cd.yml` workflow includes the following steps:
   - `terraform plan`: Generates an execution plan for AWS resources.
   - `terraform apply`: Deploys the app to ECS and provisions other resources.
 
-### 5. Terraform State Backend
+### 6. Terraform State Backend
 
 The Terraform state is stored in an S3 bucket (e.g., `node-hello-terraform-state-us-east-1`) with locking via a DynamoDB table (e.g., `node-hello-terraform-locks`). The GitHub Actions workflow automatically uses this backend, so you only need to configure it locally if running Terraform manually.
 
-### 6. Environment Variables
+### 7. Environment Variables
 
 The workflow passes the following variables to Terraform via `TF_VAR_*`:
 
@@ -118,7 +128,7 @@ The workflow passes the following variables to Terraform via `TF_VAR_*`:
 - `TF_VAR_new_relic_license_key`: New Relic license key (from GitHub Secrets).
 - `TF_VAR_aws_region`: AWS region (from GitHub Secrets).
 
-### 7. New Relic Monitoring
+### 8. New Relic Monitoring
 
 The app is configured with New Relic for monitoring. The `NEW_RELIC_LICENSE_KEY` and `NEW_RELIC_APP_NAME` are set in the ECS task definition via the Terraform configuration. Use the `NEW_RELIC_APP_NAME` to set up the newrelic integration.
 
@@ -145,7 +155,7 @@ The app is configured with New Relic for monitoring. The `NEW_RELIC_LICENSE_KEY`
    The app will run on `http://localhost:3000`.
 
 4. **Run Terraform Locally** (optional):
-   - Ensure the backend is set up (see “Configure Terraform Backend” above).
+   - Ensure the backend is set up (see “Set Up Terraform Backend” above).
    - Navigate to the `terraform/` directory:
      ```sh
      cd terraform
